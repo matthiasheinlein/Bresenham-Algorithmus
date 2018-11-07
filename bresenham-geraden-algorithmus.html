@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Bresenham-Geraden-Algorithmus</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" integrity="sha256-oSrCnRYXvHG31SBifqP2PM1uje7SJUyX0nTwO2RJV54=" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+
+        <style>
+
+            body{
+                padding:20px;
+                font-family: monospace;
+            }
+
+            #output{
+                background-color: lightyellow;
+                padding:5px;
+            }
+
+            #output p{
+                margin:0;
+            }
+
+            #control{
+                margin-bottom:20px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div id="control">
+            x_anf <input type="text" id="x_anf" value=""><br>
+            y_anf <input type="text" id="y_anf" value=""><br>
+            <br>
+            x_end <input type="text" id="x_end" value=""><br>
+            y_end <input type="text" id="y_end" value=""><br>
+            <br>
+            <input type="button" value="Berechnen" id="button_berechnen">
+        </div>
+
+
+        <div id="output">
+
+        </div>
+
+
+        <script>
+
+            function print(text){
+                $( "#output" ).append( "<p>" + text + "</p>" );
+            }
+
+            function sign(x){
+                if(x >= 0){
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+
+            function bresenham_geraden_algorithmus(x_anf, y_anf, x_end, y_end){
+
+                var x = [];
+                x[0] = parseInt(x_anf);
+
+                var y = [];
+                y[0] = parseInt(y_anf);
+
+                var n = 0;
+
+                delta_x = parseInt(x_end) - parseInt(x_anf);
+                delta_y = parseInt(y_end) - parseInt(y_anf);
+
+                var e = [];
+
+                if(Math.abs(delta_x) >= Math.abs(delta_y)){
+                    e[1] = Math.abs(delta_x) - 2*Math.abs(delta_y);
+                    print("e1 = " + e[1]);
+
+                     while(x[n] != parseInt(x_end)){
+
+                        n = n + 1;
+
+                        x[n] = x[n-1] + sign(delta_x);
+                        print("x" + n + " = " + x[n]);
+
+                        if(e[n] > 0){
+
+                            y[n] = y[n-1];
+                            print("y" + n + " = " + y[n]);
+
+                            print("---------");
+
+                            e[n+1] = e[n] - 2 * Math.abs(delta_y);
+                            print("e" + (n+1) + " = " + e[n+1]);
+
+                        } else {
+
+                            y[n] = y[n-1] + sign(delta_y);
+                            print("y" + n + " = " + y[n]);
+
+                            print("---------");
+
+                            e[n+1] = e[n] + 2 * ( Math.abs(delta_x) - Math.abs(delta_y) )
+                            print("e" + (n+1) + " = " + e[n+1]);
+                        }
+                    }
+
+                } else {
+                    e[1] = Math.abs(delta_y) - 2*Math.abs(delta_x);
+                    print("e1 = " + e[1]);
+
+                    while(y[n] != parseInt(y_end)){
+
+                        n = n + 1;
+
+                        y[n] = y[n-1] + sign(delta_y);
+                        print("y" + n + " = " + y[n]);
+
+                        if(e[n] > 0){
+
+                            x[n] = x[n-1];
+                            print("x" + n + " = " + x[n]);
+
+                            print("---------");
+
+                            e[n+1] = e[n] - 2 * Math.abs(delta_x);
+                            print("e" + (n+1) + " = " + e[n+1]);
+
+                        } else {
+
+                            x[n] = x[n-1] + sign(delta_x);
+                            print("x" + n + " = " + x[n]);
+
+                            print("---------");
+
+                            e[n+1] = e[n] + 2 * ( Math.abs(delta_y) - Math.abs(delta_x) )
+                            print("e" + (n+1) + " = " + e[n+1]);
+                        }
+                    }
+
+                }
+
+            }
+
+            $( "#button_berechnen" ).click(function() {
+
+                if( $.isNumeric($( "#x_anf" ).val()) && $.isNumeric($( "#y_anf" ).val()) && $.isNumeric($( "#x_end" ).val()) && $.isNumeric($( "#y_end" ).val()) ){
+                    $( "#output" ).html( "" );
+                    bresenham_geraden_algorithmus($( "#x_anf" ).val(), $( "#y_anf" ).val(), $( "#x_end" ).val(), $( "#y_end" ).val());
+                } else {
+                    alert("Bitte Zahlen eingeben");
+                }
+
+            });
+
+        </script>
+
+    </body>
+</html>
