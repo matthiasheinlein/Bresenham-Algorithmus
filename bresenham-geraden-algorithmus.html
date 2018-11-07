@@ -8,9 +8,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
 
         <style>
+            
+            h1{
+                margin:0;
+            }
 
             body{
-                padding:20px;
+                padding:10px;
                 font-family: monospace;
             }
 
@@ -24,6 +28,7 @@
             }
 
             #control{
+                margin-top:10px;
                 margin-bottom:20px;
             }
 
@@ -32,6 +37,10 @@
     </head>
 
     <body>
+        
+        <h1>
+            Bresenham-Geraden-Algorithmus
+        </h1>
 
         <div id="control">
             x_anf <input type="text" id="x_anf" value=""><br>
@@ -79,6 +88,9 @@
                 var e = [];
 
                 if(Math.abs(delta_x) >= Math.abs(delta_y)){
+                    print("Treibende Komponente = x");
+                    print("---------");
+
                     e[1] = Math.abs(delta_x) - 2*Math.abs(delta_y);
                     print("e1 = " + e[1]);
 
@@ -93,7 +105,6 @@
 
                             y[n] = y[n-1];
                             print("y" + n + " = " + y[n]);
-
                             print("---------");
 
                             e[n+1] = e[n] - 2 * Math.abs(delta_y);
@@ -103,7 +114,6 @@
 
                             y[n] = y[n-1] + sign(delta_y);
                             print("y" + n + " = " + y[n]);
-
                             print("---------");
 
                             e[n+1] = e[n] + 2 * ( Math.abs(delta_x) - Math.abs(delta_y) )
@@ -112,6 +122,9 @@
                     }
 
                 } else {
+                    print("Treibende Komponente = y");
+                    print("---------");
+
                     e[1] = Math.abs(delta_y) - 2*Math.abs(delta_x);
                     print("e1 = " + e[1]);
 
@@ -126,7 +139,6 @@
 
                             x[n] = x[n-1];
                             print("x" + n + " = " + x[n]);
-
                             print("---------");
 
                             e[n+1] = e[n] - 2 * Math.abs(delta_x);
@@ -136,7 +148,6 @@
 
                             x[n] = x[n-1] + sign(delta_x);
                             print("x" + n + " = " + x[n]);
-
                             print("---------");
 
                             e[n+1] = e[n] + 2 * ( Math.abs(delta_y) - Math.abs(delta_x) )
